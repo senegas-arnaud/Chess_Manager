@@ -34,5 +34,11 @@
     "surname": "Lionel",
     "birthday": "1990-08-15",
     "national_id": "LM10100"
-  }
+  },
+  {
+    "name": "Carlsen",
+    "surname": "Magnus",
+    "birthday": "1990-11-30",
+    "national_id": "MC19901"
+  } 
 ]

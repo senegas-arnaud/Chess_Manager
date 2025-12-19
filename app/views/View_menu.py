@@ -3,29 +3,28 @@ from rich.panel import Panel
 from rich.align import Align
 from rich.table import Table
 from rich import box
+import os
 
 console = Console()
 
 class View_menu:
-    
     def display_main_menu(self):
-        console.clear()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        console.print("\n" * 10)
         
-        # Titre avec bordure
         title = "[bold magenta]  ♟️    CHESS TOURNAMENT MANAGER    ♟️  [/bold magenta]"
         console.print(Align.center(Panel(title, style="bold blue", expand=False)))
         console.print()
         
-        # Menu avec tableau stylisé
         table = Table(
             show_header=True,
             header_style="bold magenta",
             border_style="blue",
             box=box.ROUNDED,
-            expand=False  # Important pour centrer
+            expand=False 
         )
         
-        table.add_column("Option", justify="center", style="cyan", width=8)
+        table.add_column("Option", justify="center", style="cyan", width=30)
         table.add_column("Action", justify="center", style="white", width=30)
         
         table.add_row("1", "👤 Add a player 👤")
@@ -43,17 +42,54 @@ class View_menu:
         console.print(Align.center(table))
         console.print()
         
-        # Calculer le padding pour centrer manuellement
         terminal_width = console.width
-        prompt_text = " Enter your choice ➤ "
-        padding = (terminal_width - len(prompt_text)) // 2
+        text = " Enter your choice ➤ "
+        padding = (terminal_width - len(text)) // 2
         
-        # Afficher le prompt centré sur la même ligne
-        console.print(" " * padding + "[bold yellow]" + prompt_text + "[/bold yellow]", end="")
+        console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
         
         choice = input()
         while choice not in ["0", "1", "2", "3", "4", "5"]:
             console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
-            console.print(" " * padding + "[bold yellow]" + prompt_text + "[/bold yellow]", end="")
+            console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
             choice = input()
         return choice
+    
+    def display_secondary_menu(self):
+        console.print("\n" * 5)
+        table = Table(
+            show_header=False,
+            header_style="bold magenta",
+            border_style="blue",
+            box=box.ROUNDED,
+            expand=False 
+            )
+        
+        table.add_column(justify="center", style="bold magenta", width=30)
+        table.add_column(justify="center", style="bold magenta", width=30)
+        table.add_column(justify="center", style="bold magenta", width=30)
+        
+        
+        table.add_row("1 ➤  Retry ", "2 ➤  Back to menu ", "3 ➤  Exit ")
+
+        console.print(Align.center(table))
+        console.print()
+
+        terminal_width = console.width
+        text = " Enter your choice ➤ "
+        padding = (terminal_width - len(text)) // 2
+        
+        console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+        
+        choice = input()
+        while choice not in ["0", "1", "2", "3"]:
+            console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
+            console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+            choice = input()
+        return choice
+        
+
+    def exit_message(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        console.print("\n" * 15)
+        console.print(Align.center(Panel("[bold magenta]Thank you for using Chess Manager ! Goodbye ! 👋[/bold magenta]", style="bold blue", expand=False)))
