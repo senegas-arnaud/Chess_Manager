@@ -6,14 +6,14 @@ import os
 
 console = Console()
 
-class View_player_info:
+class View_tournament:
 
-    def player_info(self):
+    def tournament_info(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-        console.print("\n" * 5)
+        console.print("\n" * 3)
         
         title = Panel(
-            "[bold magenta]📋  PLAYER REGISTRATION  📋[/bold magenta]",
+            "[bold magenta]📋  TOURNAMENT REGISTRATION  📋[/bold magenta]",
             border_style="blue",
             box=box.ROUNDED,
             expand=False
@@ -29,24 +29,28 @@ class View_player_info:
         padding_left = (terminal_width - form_width) // 2
         
         console.print(" " * padding_left, end="")
-        name = console.input("[bold yellow]📝 Enter player's name ➤[/bold yellow] ")
+        name = console.input("[bold yellow]📝 Enter tournament's name ➤[/bold yellow] ")
         console.print()
         
         console.print(" " * padding_left, end="")
-        surname = console.input("[bold yellow]📝 Enter player's surname ➤[/bold yellow] ")
+        location = console.input("[bold yellow]📝 Enter tournament's location ➤[/bold yellow] ")
         console.print()
         
         console.print(" " * padding_left, end="")
-        birthday = console.input("[bold yellow]📅 Enter date of birth (YYYY-MM-DD) ➤[/bold yellow] ")
+        beginning_date = console.input("[bold yellow]📅 Enter beginning date of tournament (YYYY-MM-DD) ➤[/bold yellow] ")
+        console.print()
+
+        console.print(" " * padding_left, end="")
+        ending_date = console.input("[bold yellow]📅 Enter ending date of tournament (YYYY-MM-DD) ➤[/bold yellow] ")
         console.print()
         
         console.print(" " * padding_left, end="")
-        national_id = console.input("[bold yellow]🆔 Enter national ID ➤[/bold yellow] ")
+        remark = console.input("[bold yellow]🆔 Add any additionnal remarks ➤[/bold yellow] ")
         console.print()
         
         console.print(Align.center("[blue]" + "─" * 60 + "[/blue]"))
         
-        return name, surname, birthday, national_id
+        return name, location, beginning_date, ending_date, remark
     
     
     def display_error(self, text):

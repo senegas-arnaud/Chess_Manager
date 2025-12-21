@@ -26,13 +26,13 @@ class Model_player_info:
         return bool(re.match(pattern, self.player_id))
     
     def check_name(self):
-        if not (0 < len(self.player_name.strip()) < 20):
+        if not (0 < len(self.player_name.strip()) < 30):
             return False
         pattern = r'^[a-zA-ZÀ-ÿ\s\-\']+$'
         return bool(re.match(pattern, self.player_name.strip()))
     
     def check_surname(self):
-        if not (0 < len(self.player_surname.strip()) < 20):
+        if not (0 < len(self.player_surname.strip()) < 30):
             return False
         pattern = r'^[a-zA-ZÀ-ÿ\s\-\']+$'
         return bool(re.match(pattern, self.player_surname.strip()))
