@@ -1,3 +1,8 @@
 {
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--max-line-length=119"],
+    "editor.rulers": [119],
+    "editor.formatOnSave": false
 }

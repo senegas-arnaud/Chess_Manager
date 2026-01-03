@@ -10,9 +10,10 @@ class Controller_tournament:
         data = self.view.tournament_info()
         tournament = Model_tournament(data[0], data[1], data[2], data[3], data[4])
 
-        error = tournament.validate_tournament_info()  
-        if error:
-            self.view.display_error(error)
+        errors = tournament.validate_tournament_info()
+        if errors:
+            for error in errors:
+                self.view.display_error(error)
         else:
             result = tournament.save_tournament_data()
             self.view.display_success(result)

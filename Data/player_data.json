@@ -40,5 +40,23 @@
     "surname": "Magnus",
     "birthday": "1990-11-30",
     "national_id": "MC19901"
-  } 
+  },
+  {
+    "name": "Kasparov",
+    "surname": "Garry",
+    "birthday": "1963-04-13",
+    "national_id": "GK52563"
+  },
+  {
+    "name": "Marie-Christine",
+    "surname": "SÃ©nÃ©gas",
+    "birthday": "1964-02-12",
+    "national_id": "MC19641"
+  },
+  {
+    "name": "Fallou",
+    "surname": "Serigne",
+    "birthday": "1990-10-10",
+    "national_id": "FS55555"
+  }
 ]

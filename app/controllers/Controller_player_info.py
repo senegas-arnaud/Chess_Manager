@@ -1,6 +1,7 @@
 from app.models.Model_player_info import Model_player_info
 from app.views.View_player_info import View_player_info
 
+
 class Controller_player_info:
 
     def __init__(self):

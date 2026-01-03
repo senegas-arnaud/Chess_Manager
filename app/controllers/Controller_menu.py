@@ -4,6 +4,7 @@ from app.controllers.Controller_tournament import Controller_tournament
 from rich.console import Console
 import os
 
+
 class Controller_menu:
 
     def __init__(self):
@@ -11,6 +12,7 @@ class Controller_menu:
         self.player_controller = Controller_player_info()
         self.tournament_controller = Controller_tournament()
         self.console = Console()
+
     def main_menu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         while True:
@@ -50,7 +52,7 @@ class Controller_menu:
                     elif sub_choice == "3":
                         self.view.exit_message()
                         return
-                
+
             elif choice == "4":
                 # Logic to manage tournament
                 pass

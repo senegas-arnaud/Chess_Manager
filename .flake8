@@ -1,0 +1,14 @@
+[flake8]
+max-line-length = 119
+exclude = 
+    .venv,
+    __pycache__,
+    .git,
+    *.pyc,
+    .pytest_cache,
+    flake8_rapport,
+    data
+format = default
+show-source = True
+statistics = True
+count = True

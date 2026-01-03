@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=C:\Users\arnau\Documents\Open Classroom\Chess_Management\.venv"
+set "VIRTUAL_ENV=C:\Users\arnau\Documents\Open Classroom\Chess_Manager\.venv"
 
 if not defined PROMPT set PROMPT=$P$G
 
