@@ -8,7 +8,7 @@ class Controller_player_info:
         self.view = View_player_info()
 
     def add_player(self):
-        data = self.view.player_info()
+        data = self.view.player_registration()
         player = Model_player_info(data[0], data[1], data[2], data[3])
 
         errors = player.check_player_info()
@@ -18,3 +18,8 @@ class Controller_player_info:
         else:
             result = player.add_player_data()
             self.view.display_success(result)
+
+    def list_all_players(self):
+        model = Model_player_info()
+        players = model.get_sorted_players()
+        self.view.display_all_players(players)

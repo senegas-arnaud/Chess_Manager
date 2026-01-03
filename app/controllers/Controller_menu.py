@@ -36,8 +36,9 @@ class Controller_menu:
                         return
 
             elif choice == "2":
-                # Logic to list all players
-                pass
+                os.system('cls' if os.name == 'nt' else 'clear')
+                self.player_controller.list_all_players()
+
             elif choice == "3":
                 os.system('cls' if os.name == 'nt' else 'clear')
                 self.tournament_controller.create_tournament()
@@ -54,8 +55,11 @@ class Controller_menu:
                         return
 
             elif choice == "4":
-                # Logic to manage tournament
+                # Register player for a tournament
                 pass
             elif choice == "5":
-                # Logic for reports
+                # Lauch tournament 
+                pass
+            elif choice == "5":
+                # reports
                 pass
