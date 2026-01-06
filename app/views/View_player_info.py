@@ -64,7 +64,7 @@ class View_player_info:
         
         if not players:
             console.print(Align.center("[yellow]No players registered yet.[/yellow]"))
-            input("\n[Press Enter to continue...]")
+            console.input("\n[bold yellow]➤ Press Enter to continue...[/bold yellow]")
             return
         
         title = "[bold magenta]📋  ALL PLAYERS  📋[/bold magenta]"
@@ -97,4 +97,4 @@ class View_player_info:
         console.print(Align.center(f"[bold cyan]Total: {len(players)} player(s)[/bold cyan]"))
         console.print()
         
-        input("\n[Press Enter to going back...]")
+        console.input("\n[bold yellow]➤  Press ENTER button to going back...[/bold yellow]")

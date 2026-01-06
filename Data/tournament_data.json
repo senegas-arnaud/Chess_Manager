@@ -7,7 +7,10 @@
         "max_rounds": 4,
         "current_round": 0,
         "round_history": [],
-        "players": [],
+        "players": [
+            "MC19901",
+            "GK52563"
+        ],
         "remarks": ""
     },
     {

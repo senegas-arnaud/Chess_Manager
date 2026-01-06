@@ -55,11 +55,11 @@ class Controller_menu:
                         return
 
             elif choice == "4":
-                # Register player for a tournament
-                pass
+                self.tournament_controller.register_player_for_tournament()
+
             elif choice == "5":
                 # Lauch tournament 
                 pass
-            elif choice == "5":
+            elif choice == "6":
                 # reports
                 pass
