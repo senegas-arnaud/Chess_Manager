@@ -1,6 +1,7 @@
 from app.views.View_menu import View_menu
 from app.controllers.Controller_player_info import Controller_player_info
 from app.controllers.Controller_tournament import Controller_tournament
+from app.controllers.Controller_match import Controller_match
 from rich.console import Console
 import os
 
@@ -11,6 +12,7 @@ class Controller_menu:
         self.view = View_menu()
         self.player_controller = Controller_player_info()
         self.tournament_controller = Controller_tournament()
+        self.match_controller = Controller_match()
         self.console = Console()
 
     def main_menu(self):
@@ -58,8 +60,9 @@ class Controller_menu:
                 self.tournament_controller.register_player_for_tournament()
 
             elif choice == "5":
-                # Lauch tournament 
+                # Launch tournament
                 pass
+
             elif choice == "6":
                 # reports
                 pass

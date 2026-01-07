@@ -86,16 +86,16 @@ class Model_player_info:
             json.dump(player, file, indent=2, ensure_ascii=False)
 
         return f"✅ {self.player_name} {self.player_surname} successfully added !"
-    
+
     def get_sorted_players(self):
         players = self.load_player_data()
-        
+
         if not players:
             return []
-        
+
         sorted_players = sorted(
             players,
             key=lambda p: (p['name'].lower(), p['surname'].lower())
         )
-        
+
         return sorted_players

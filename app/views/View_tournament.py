@@ -66,52 +66,6 @@ class View_tournament:
 
     def display_and_select_tournaments(self, tournaments):
         os.system('cls' if os.name == 'nt' else 'clear')
-
-        title = "[bold magenta]📋  SELECT A TOURNAMENT  📋[/bold magenta]"
-        console.print(Align.center(Panel(title, style="bold blue", expand=False)))
-        console.print()
-
-        table = Table(
-            show_header=True,
-            header_style="bold magenta",
-            border_style="blue",
-            box=box.ROUNDED,
-            expand=False
-        )
-
-        table.add_column("Index", justify="center", style="cyan", width=10)
-        table.add_column("Name", justify="center", style="cyan", width=20)
-        table.add_column("Location", justify="center", style="white", width=20)
-        table.add_column("Beginning Date", justify="center", style="green", width=15)
-
-        for i, tournament in enumerate(tournaments, 1):
-            table.add_row(
-                str(i),
-                tournament["name"],
-                tournament["location"],
-                tournament["beginning_date"]
-            )
-
-        console.print(Align.center(table))
-        console.print()
-
-        choice = console.input("\n[bold yellow]Select tournament index (0 to cancel) ➤[/bold yellow]")
-
-        try:
-            choice_int = int(choice)
-            if choice_int == 0:
-                return None
-            if 1 <= choice_int <= len(tournaments):
-                return tournaments[choice_int - 1]
-            else:
-                console.print(Align.center("[red]❌ Invalid choice![/red]"))
-                return None
-        except ValueError:
-            console.print(Align.center("[red]❌ Please enter a number![/red]"))
-            return None
-
-    def display_and_select_tournaments(self, tournaments):
-        os.system('cls' if os.name == 'nt' else 'clear')
         console.print("\n" * 2)
 
         title = "[bold magenta]📋  SELECT A TOURNAMENT  📋[/bold magenta]"
@@ -133,7 +87,7 @@ class View_tournament:
         table.add_column("Players", justify="center", style="yellow", width=10)
 
         for i, tournament in enumerate(tournaments, 1):
-            
+
             table.add_row(
                 str(i),
                 tournament["name"],

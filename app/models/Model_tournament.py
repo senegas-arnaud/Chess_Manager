@@ -112,53 +112,53 @@ class Model_tournament:
         if any(n["name"] == self.tournament_name for n in player):
             errors.append(f"❌ A tournament with the name {self.tournament_name} already exist. ❌")
         return errors
-    
+
     def get_all_tournaments(self):
         return self.load_tournament_data()
-    
+
     def check_id_format(self, player_id):
         pattern = r'^[A-Z]{2}\d{5}$'
         return bool(re.match(pattern, player_id))
-    
+
     def validate_player_registration(self, tournament_id, player_id, all_players):
         errors = []
-        
+
         if not self.check_id_format(player_id):
             errors.append("❌ National ID format is invalid. Use 2 uppercase letters followed by 5 digits. ❌")
             return errors
-        
+
         tournament = self.get_tournament_by_id(tournament_id)
         if not tournament:
             errors.append("❌ Tournament not found. ❌")
             return errors
-        
+
         player_exists = any(p['national_id'] == player_id for p in all_players)
         if not player_exists:
             errors.append(f"❌ Player with ID {player_id} does not exist. ❌")
             return errors
-        
+
         if player_id in tournament['players']:
             errors.append(f"❌ Player with ID {player_id} is already registered in this tournament. ❌")
             return errors
-        
+
         return errors
-    
+
     def get_tournament_by_id(self, tournament_id):
         tournaments = self.load_tournament_data()
         return next((t for t in tournaments if t['name'] == tournament_id), None)
 
     def register_player(self, tournament_id, player_id):
         tournaments = self.load_tournament_data()
-        
+
         for tournament in tournaments:
             if tournament['name'] == tournament_id:
                 tournament['players'].append(player_id)
-                
+
                 with open(self.file, 'w', encoding='utf-8') as f:
                     json.dump(tournaments, f, ensure_ascii=False, indent=4)
-        
+
         return "❌ Tournament not found. ❌"
-    
+
     def delete_player(self, tournament_id, player_id):
         tournaments = self.load_tournament_data()
 

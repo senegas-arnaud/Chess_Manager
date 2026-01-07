@@ -61,16 +61,16 @@ class View_player_info:
 
     def display_all_players(self, players):
         os.system('cls' if os.name == 'nt' else 'clear')
-        
+
         if not players:
             console.print(Align.center("[yellow]No players registered yet.[/yellow]"))
             console.input("\n[bold yellow]➤ Press Enter to continue...[/bold yellow]")
             return
-        
+
         title = "[bold magenta]📋  ALL PLAYERS  📋[/bold magenta]"
         console.print(Align.center(Panel(title, style="bold blue", expand=False)))
         console.print()
-        
+
         table = Table(
             show_header=True,
             header_style="bold magenta",
@@ -78,23 +78,23 @@ class View_player_info:
             box=box.ROUNDED,
             expand=False
         )
-        
+
         table.add_column("Name", justify="left", style="white", width=20)
         table.add_column("National ID", justify="left", style="white", width=20)
         table.add_column("N°", justify="center", style="yellow", width=12)
-        
+
         for i, player in enumerate(players, 1):
             full_name = f"{player['name']} {player['surname']}"
-            
+
             table.add_row(
                 full_name,
                 player['national_id'],
                 str(i)
             )
-        
+
         console.print(Align.center(table))
         console.print()
         console.print(Align.center(f"[bold cyan]Total: {len(players)} player(s)[/bold cyan]"))
         console.print()
-        
+
         console.input("\n[bold yellow]➤  Press ENTER button to going back...[/bold yellow]")
