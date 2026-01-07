@@ -127,7 +127,6 @@ class View_tournament:
         console.input("\n[bold yellow]➤ Press ENTER button to go back...[/bold yellow]")
 
     def display_tournament_management(self, tournament, all_players):
-        """Affiche la page de gestion complète du tournoi"""
         os.system('cls' if os.name == 'nt' else 'clear')
         console.print("\n" * 2)
 
@@ -135,9 +134,12 @@ class View_tournament:
         console.print(Align.center(Panel(title, style="bold blue", expand=False)))
         console.print()
 
+        registered = len(tournament['players'])
+
         info_text = (
             f"[cyan]📍 {tournament['location']}[/cyan]  |  "
             f"[green]📅 {tournament['beginning_date']} → {tournament['ending_date']}[/green]  |  "
+            f"[yellow]👥 {registered} players registered[/yellow]"
         )
         console.print(Align.center(info_text))
         console.print()
@@ -154,7 +156,6 @@ class View_tournament:
                 border_style="blue",
                 box=box.ROUNDED,
                 expand=False,
-                title="[bold cyan]Registered Players[/bold cyan]"
             )
 
             table.add_column("N°", justify="center", style="cyan", width=5)
@@ -188,7 +189,20 @@ class View_tournament:
         menu_table.add_column(justify="center", style="white", width=25)
         menu_table.add_column(justify="center", style="white", width=25)
 
-        menu_table.add_row("1 ➤ Add player", "2 ➤ Delete player", "3 ➤ Go back")
+        current_round = tournament.get('current_round', 0)
+
+        if current_round > 0:
+            menu_table.add_row(
+                "[bold cyan]1 ➤  [/bold cyan]Manage rounds",
+                "[bold cyan]2 ➤  [/bold cyan]Add player",
+                "[bold cyan]3 ➤  [/bold cyan]Delete player",
+                "[bold cyan]4 ➤  [/bold cyan]Go back")
+        else:
+            menu_table.add_row(
+                "[bold cyan]1 ➤  [/bold cyan]Add player",
+                "[bold cyan]2 ➤  [/bold cyan]Delete player",
+                "[bold cyan]3 ➤  [/bold cyan]Launch tournament",
+                "[bold cyan]4 ➤  [/bold cyan]Go back")
 
         console.print(Align.center(menu_table))
         console.print()
@@ -200,14 +214,14 @@ class View_tournament:
         console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
 
         choice = input()
-        while choice not in ["1", "2", "3"]:
+        while choice not in ["1", "2", "3", "4"]:
             console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
             console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
             choice = input()
+
         return choice
 
     def player_registration(self):
-        """Demande l'ID du joueur à inscrire"""
         os.system('cls' if os.name == 'nt' else 'clear')
         console.print("\n" * 3)
 
@@ -238,7 +252,6 @@ class View_tournament:
         return national_id.strip().upper()
 
     def select_player_to_delete(self, tournament, all_players):
-        """Sélectionner un joueur à supprimer"""
         os.system('cls' if os.name == 'nt' else 'clear')
         console.print("\n" * 2)
 
@@ -300,3 +313,35 @@ class View_tournament:
             console.print(Align.center("[red]❌ Please enter a valid number![/red]"))
             input("\n[Press Enter to continue...]")
             return None
+
+    def display_secondary_menu(self):
+        console.print()
+
+        table = Table(
+            show_header=False,
+            border_style="blue",
+            box=box.ROUNDED,
+            expand=False
+        )
+
+        table.add_column(justify="center", style="white", width=25)
+        table.add_column(justify="center", style="white", width=25)
+
+        table.add_row("1 ➤ Retry", "2 ➤ Go back")
+
+        console.print(Align.center(table))
+        console.print()
+
+        terminal_width = console.width
+        text = " Enter your choice ➤ "
+        padding = (terminal_width - len(text)) // 2
+
+        console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+        choice = input()
+
+        while choice not in ["1", "2"]:
+            console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
+            console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+            choice = input()
+
+        return choice

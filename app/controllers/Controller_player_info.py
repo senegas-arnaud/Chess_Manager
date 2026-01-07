@@ -8,16 +8,35 @@ class Controller_player_info:
         self.view = View_player_info()
 
     def add_player(self):
-        data = self.view.player_registration()
-        player = Model_player_info(data[0], data[1], data[2], data[3])
+        while True:
+            data = self.view.player_registration()
+            player = Model_player_info(data[0], data[1], data[2], data[3])
 
-        errors = player.check_player_info()
-        if errors:
-            for error in errors:
-                self.view.display_error(error)
-        else:
-            result = player.add_player_data()
-            self.view.display_success(result)
+            errors = player.check_player_info()
+            if errors:
+                for error in errors:
+                    self.view.display_error(error)
+
+                choice = self.view.display_secondary_menu()
+
+                if choice == "1":
+                    # Retry
+                    continue
+                elif choice == "2":
+                    # Go back
+                    break
+            else:
+                result = player.add_player_data()
+                self.view.display_success(result)
+
+                choice = self.view.display_secondary_menu()
+
+                if choice == "1":
+                    # Retry
+                    continue
+                elif choice == "2":
+                    # Go back
+                    break
 
     def list_all_players(self):
         model = Model_player_info()

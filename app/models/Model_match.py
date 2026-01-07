@@ -11,7 +11,6 @@ class Model_match:
         self.file = self.data_dir / 'tournaments.json'
 
     def load_tournament_data(self):
-        """Charge tous les tournois"""
         if self.file.exists():
             with open(self.file, 'r', encoding='utf-8') as f:
                 try:

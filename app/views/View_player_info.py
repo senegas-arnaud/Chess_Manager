@@ -59,6 +59,38 @@ class View_player_info:
     def display_info(self, text):
         console.print(Align.center(f"[bold blue]{text}[/bold blue] \n"))
 
+    def display_secondary_menu(self):
+        console.print()
+
+        table = Table(
+            show_header=False,
+            border_style="blue",
+            box=box.ROUNDED,
+            expand=False
+        )
+
+        table.add_column(justify="center", style="white", width=25)
+        table.add_column(justify="center", style="white", width=25)
+
+        table.add_row("[bold cyan]1 ➤   [/bold cyan]Retry", "[bold cyan]2 ➤   [/bold cyan]Go back")
+
+        console.print(Align.center(table))
+        console.print()
+
+        terminal_width = console.width
+        text = " Enter your choice ➤ "
+        padding = (terminal_width - len(text)) // 2
+
+        console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+        choice = input()
+
+        while choice not in ["1", "2"]:
+            console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
+            console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+            choice = input()
+
+        return choice
+
     def display_all_players(self, players):
         os.system('cls' if os.name == 'nt' else 'clear')
 
