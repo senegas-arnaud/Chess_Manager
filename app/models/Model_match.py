@@ -7,8 +7,7 @@ import random
 class Model_match:
 
     def __init__(self):
-        self.data_dir = Path('data')
-        self.file = self.data_dir / 'tournaments.json'
+        self.file = Path(r'Data\tournament_data.json')
 
     def load_tournament_data(self):
         if self.file.exists():
@@ -105,22 +104,29 @@ class Model_match:
                 matches = []
                 used = set()
 
-                for i, player in enumerate(sorted_players):
+                for player in sorted_players:
                     if player in used:
                         continue
 
-                    for j in range(i + 1, len(sorted_players)):
-                        opponent = sorted_players[j]
-
-                        if opponent in used:
-                            continue
-
-                        if not self.already_played_matches(tournament, player, opponent):
-                            match = [[player, 0], [opponent, 0]]
-                            matches.append(match)
-                            used.add(player)
-                            used.add(opponent)
+                    opponent = None
+                    for potential_opponent in sorted_players:
+                        if potential_opponent not in used and not self.already_played_matches(
+                                tournament, player, potential_opponent) and potential_opponent != player:
+                            opponent = potential_opponent
                             break
+
+                    # Make rematch if necessary
+                    if not opponent:
+                        for potential_opponent in sorted_players:
+                            if potential_opponent != player and potential_opponent not in used:
+                                opponent = potential_opponent
+                                break
+
+                    if opponent:
+                        match = [[player, 0], [opponent, 0]]
+                        matches.append(match)
+                        used.add(player)
+                        used.add(opponent)
 
                 current_round = tournament.get('current_round', 0)
                 new_round = {
