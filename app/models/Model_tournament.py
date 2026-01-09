@@ -34,13 +34,16 @@ class Model_tournament:
 
         new_tournament_data = {
             "name": self.tournament_name,
+            "status": "registration",
+            "winner": "",
             "location": self.tournament_location,
             "beginning_date": self.tournament_beginning_date,
             "ending_date": self.tournament_ending_date,
             "max_rounds": self.tournament_max_rounds,
             "current_round": self.current_round,
-            "round_history": self.round_history,
             "players": self.players,
+            "players_scores": {},
+            "round_history": self.round_history,
             "remarks": self.remarks
         }
 
@@ -132,6 +135,11 @@ class Model_tournament:
             errors.append("❌ Tournament not found. ❌")
             return errors
 
+        status = tournament.get('status', 'registration')
+        if status != 'registration':
+            errors.append(f"❌ Cannot register players when tournament status is {status}. ❌")
+            return errors
+
         player_exists = any(p['national_id'] == player_id for p in all_players)
         if not player_exists:
             errors.append(f"❌ Player with ID {player_id} does not exist. ❌")
@@ -164,8 +172,14 @@ class Model_tournament:
 
         for tournament in tournaments:
             if tournament['name'] == tournament_id:
+                status = tournament.get('status', 'registration')
+                if status != 'registration':
+                    return (f"❌ Cannot delete players when tournament status is {status}. ❌")
                 if player_id in tournament['players']:
                     tournament['players'].remove(player_id)
+
+                    if 'player_scores' in tournament and player_id in tournament['player_scores']:
+                        del tournament['player_scores'][player_id]
 
                     with open(self.file, 'w', encoding='utf-8') as f:
                         json.dump(tournaments, f, ensure_ascii=False, indent=4)

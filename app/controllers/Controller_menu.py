@@ -3,6 +3,7 @@ from app.controllers.Controller_player_info import Controller_player_info
 from app.controllers.Controller_tournament import Controller_tournament
 from app.models.Model_player_info import Model_player_info
 from app.models.Model_tournament import Model_tournament
+from app.controllers.Controller_reports import Controller_reports
 import os
 
 
@@ -14,6 +15,7 @@ class Controller_menu:
         self.tournament_controller = Controller_tournament()
         self.player_model = Model_player_info()
         self.tournament_model = Model_tournament()
+        self.report_controller = Controller_reports()
 
     def main_menu(self):
         while True:
@@ -30,7 +32,7 @@ class Controller_menu:
                 self.manage_tournaments_menu()
 
             elif choice == "3":
-                self.view.display_reports_menu()
+                self.report_controller.show_tournament_reports()
 
     def manage_players_menu(self):
         while True:

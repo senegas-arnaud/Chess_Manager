@@ -65,6 +65,7 @@ class Model_match:
                     if player_id not in tournament['player_scores']:
                         tournament['player_scores'][player_id] = 0
 
+                tournament['status'] = "in progress"
                 self.save_tournament_data(tournaments)
 
                 return matches
@@ -177,11 +178,24 @@ class Model_match:
 
                 self.save_tournament_data(tournaments)
 
-                self.end_round(tournament_name)
+                if self.is_round_complete(round_data):
+                    self.end_round(tournament_name)
+
+                    current_round = tournament['current_round']
+                    max_rounds = tournament.get('max_rounds', 4)
+
+                    if current_round >= max_rounds:
+                        self.finish_tournament(tournament_name)
 
                 return True
 
         return False
+
+    def is_round_complete(self, round_data):
+        for match in round_data['matches']:
+            if match[0][1] == 0 and match[1][1] == 0:
+                return False
+        return True
 
     def end_round(self, tournament_name):
         tournaments = self.load_tournament_data()
@@ -195,5 +209,33 @@ class Model_match:
                     round_data['end_time'] = datetime.now().isoformat()
                     self.save_tournament_data(tournaments)
                     return True
+
+        return False
+
+    def finish_tournament(self, tournament_name):
+        tournaments = self.load_tournament_data()
+
+        for tournament in tournaments:
+            if tournament['name'] == tournament_name:
+                tournament['status'] = "done"
+
+                player_scores = tournament.get('player_scores', {})
+
+                if player_scores:
+                    max_score = max(player_scores.values())
+
+                    winners = [
+                        player_id for player_id, score in player_scores.items()
+                        if score == max_score
+                    ]
+
+                    tournament['winner'] = winners
+
+                else:
+                    tournament['winner'] = None
+
+                self.save_tournament_data(tournaments)
+
+                return True
 
         return False
