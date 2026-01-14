@@ -1,6 +1,11 @@
 from app.models.Model_tournament import Model_tournament
 from app.views.View_tournament import View_tournament
 from app.models.Model_player_info import Model_player_info
+from rich.console import Console
+from rich.align import Align
+import os
+
+console = Console()
 
 
 class Controller_tournament:
@@ -12,7 +17,11 @@ class Controller_tournament:
     def create_tournament(self):
         while True:
             data = self.view.tournament_info()
-            tournament = Model_tournament(data[0], data[1], data[2], data[3], data[4])
+
+            if data is None:
+                break
+
+            tournament = Model_tournament(data[0], data[1], data[2], data[3], data[4], data[5])
 
             errors = tournament.validate_tournament_info()
             if errors:
@@ -87,7 +96,7 @@ class Controller_tournament:
 
     def add_player_to_tournament(self, tournament, all_players):
         while True:
-            player_id = self.view.player_registration()
+            player_id = self.view.player_registration(all_players, tournament['players'])
 
             if player_id == "0" or not player_id:
                 break
@@ -131,4 +140,42 @@ class Controller_tournament:
 
         result = self.model.delete_player(tournament['name'], player_id)
         self.view.display_success(result)
+        input("\n[Press Enter to continue...]")
+
+    def delete_tournament(self):
+        tournaments = self.model.get_all_tournaments()
+
+        if not tournaments:
+            self.view.display_error("No tournaments available.")
+            input("\n[Press Enter to continue...]")
+            return
+
+        selected_tournament = self.view.select_tournament_to_delete(tournaments)
+
+        if not selected_tournament:
+            return
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+        console.print("\n" * 5)
+        console.print(
+            Align.center(
+                f"[bold red]⚠️  Are you sure you want to delete '{selected_tournament['name']}'?[/bold red]"
+            )
+        )
+        console.print()
+
+        confirm = console.input("\n[bold yellow]Type 'yes' to confirm ➤[/bold yellow] ")
+
+        if confirm.lower() != 'yes':
+            self.view.display_info("Deletion cancelled.")
+            input("\n[Press Enter to continue...]")
+            return
+
+        result = self.model.delete_tournament(selected_tournament['name'])
+
+        if "✅" in result:
+            self.view.display_success(result)
+        else:
+            self.view.display_error(result)
+
         input("\n[Press Enter to continue...]")

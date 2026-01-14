@@ -70,7 +70,7 @@ class View_match:
 
     def display_round_menu(self, tournament):
         current_round = tournament.get('current_round', 0)
-        max_rounds = tournament.get('max_rounds', 4)
+        max_rounds = int(tournament.get('max_rounds', 4))
 
         info_text = f"[cyan]Round:[/cyan] {current_round}/{max_rounds}"
         console.print(Align.center(info_text))
@@ -211,6 +211,20 @@ class View_match:
             Align.center(
                 "[bold red]❌ Cannot start tournament!\n"
                 "Number of players must be even.[/bold red]"
+            )
+        )
+        console.print()
+        input("\n[bold yellow]➤ Press ENTER to go back...[/bold yellow]")
+
+    def display_error_minimum_players(self, min_players, max_rounds, num_players):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        console.print("\n" * 5)
+
+        console.print(
+            Align.center(
+                f"[bold red]❌ Cannot start tournament!\n"
+                f"You need at least {min_players} players for {max_rounds} rounds.\n"
+                f"Current: {num_players} players.[/bold red]"
             )
         )
         console.print()

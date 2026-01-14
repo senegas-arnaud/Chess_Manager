@@ -185,9 +185,106 @@
         "beginning_date": "2026-02-10",
         "ending_date": "2026-02-20",
         "max_rounds": 4,
+        "current_round": 4,
+        "round_history": [
+            {
+                "name": "Round 1",
+                "start_time": "2026-01-09T21:52:44.790903",
+                "end_time": "2026-01-09T21:54:04.257150",
+                "matches": [
+                    [
+                        [
+                            "JD12345",
+                            0
+                        ],
+                        [
+                            "SA12345",
+                            1
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 2",
+                "start_time": "2026-01-09T21:54:19.231105",
+                "end_time": "2026-01-09T21:55:37.752445",
+                "matches": [
+                    [
+                        [
+                            "SA12345",
+                            1
+                        ],
+                        [
+                            "JD12345",
+                            0
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 3",
+                "start_time": "2026-01-09T21:55:39.404328",
+                "end_time": "2026-01-09T21:56:06.074893",
+                "matches": [
+                    [
+                        [
+                            "SA12345",
+                            0
+                        ],
+                        [
+                            "JD12345",
+                            1
+                        ]
+                    ]
+                ]
+            },
+            {
+                "name": "Round 4",
+                "start_time": "2026-01-09T21:56:09.575052",
+                "end_time": "2026-01-09T21:56:13.674785",
+                "matches": [
+                    [
+                        [
+                            "SA12345",
+                            1
+                        ],
+                        [
+                            "JD12345",
+                            0
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "players": [
+            "JD12345",
+            "SA12345"
+        ],
+        "remarks": "",
+        "player_scores": {
+            "JD12345": 1.0,
+            "SA12345": 3.0
+        },
+        "status": "done",
+        "winner": [
+            "SA12345"
+        ]
+    },
+    {
+        "name": "Test",
+        "status": "registration",
+        "winner": "",
+        "location": "Marseille",
+        "beginning_date": "2026-03-15",
+        "ending_date": "2026-04-15",
+        "max_rounds": "4",
         "current_round": 0,
+        "players": [
+            "SA12345",
+            "KA12121"
+        ],
+        "players_scores": {},
         "round_history": [],
-        "players": [],
         "remarks": ""
     }
 ]

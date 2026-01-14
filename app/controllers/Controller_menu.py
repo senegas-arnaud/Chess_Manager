@@ -49,8 +49,7 @@ class Controller_menu:
                 self.player_controller.add_player()
 
             elif choice == "2":
-                os.system('cls' if os.name == 'nt' else 'clear')
-                input("\n[Press Enter to continue...]")
+                self.player_controller.modify_player()
 
             elif choice == "3":
                 break
@@ -65,14 +64,6 @@ class Controller_menu:
                 self.tournament_controller.create_tournament()
 
             elif choice == "2":
-                os.system('cls' if os.name == 'nt' else 'clear')
-                input("\n[Press Enter to continue...]")
-
-            elif choice == "3":
-                os.system('cls' if os.name == 'nt' else 'clear')
-                input("\n[Press Enter to continue...]")
-
-            elif choice == "4":
                 if not tournaments:
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("\n⚠️  No tournaments available.")
@@ -84,6 +75,9 @@ class Controller_menu:
                 if selected_tournament:
                     self.tournament_controller.manage_selected_tournament(selected_tournament)
 
-            elif choice == "5":
+            elif choice == "3":
+                self.tournament_controller.delete_tournament()
+
+            elif choice == "4":
                 # Go back
                 break

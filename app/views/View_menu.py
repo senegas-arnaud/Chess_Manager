@@ -15,7 +15,7 @@ class View_menu:
         console.print("\n" * 3)
 
         title = Panel(
-            "[bold magenta]♟️  CHESS TOURNAMENT MANAGER  ♟️[/bold magenta]",
+            "[bold magenta]♟️   CHESS TOURNAMENT MANAGER  ♟️[/bold magenta]",
             border_style="blue",
             box=box.ROUNDED,
             expand=False
@@ -34,16 +34,16 @@ class View_menu:
         table.add_column(justify="center", style="white", width=30)
 
         table.add_row("", "")
-        table.add_row("1", "📋 Manage Players 📋")
+        table.add_row("1", "📋  Manage Players 📋")
         table.add_row("", "")
         table.add_row("", "")
-        table.add_row("2", "🏆 Manage Tournaments 🏆")
+        table.add_row("2", "🏆  Manage Tournaments 🏆")
         table.add_row("", "")
         table.add_row("", "")
-        table.add_row("3", "📊 Reports 📊")
+        table.add_row("3", "📊  Reports 📊")
         table.add_row("", "")
         table.add_row("", "")
-        table.add_row("0", "🚪 Exit 🚪")
+        table.add_row("0", "🚪  Exit 🚪")
         table.add_row("", "")
 
         console.print(Align.center(table))
@@ -154,7 +154,7 @@ class View_menu:
                 expand=False
             )
 
-            table.add_column("Index", justify="center", style="cyan", width=10)
+            table.add_column("Index", justify="center", style="yellow", width=10)
             table.add_column("Name", justify="left", style="white", width=25)
             table.add_column("Location", justify="left", style="cyan", width=20)
             table.add_column("Date", justify="center", style="green", width=25)
@@ -185,14 +185,12 @@ class View_menu:
         menu_table.add_column(justify="center", style="white", width=22)
         menu_table.add_column(justify="center", style="white", width=22)
         menu_table.add_column(justify="center", style="white", width=22)
-        menu_table.add_column(justify="center", style="white", width=22)
 
         menu_table.add_row(
             "[cyan]1 ➤  [/cyan]Create tournament",
-            "[cyan]2 ➤  [/cyan]Delete tournament",
-            "[cyan]3 ➤  [/cyan]Modify tournament",
-            "[cyan]4 ➤  [/cyan]Select tournament",
-            "[cyan]5 ➤  [/cyan]Go back"
+            "[cyan]2 ➤  [/cyan]Select tournament",
+            "[cyan]3 ➤  [/cyan]Delete tournament",
+            "[cyan]4 ➤  [/cyan]Go back"
         )
 
         console.print(Align.center(menu_table))
@@ -205,7 +203,7 @@ class View_menu:
         console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
         choice = input()
 
-        while choice not in ["1", "2", "3", "4", "5"]:
+        while choice not in ["1", "2", "3", "4"]:
             console.print(Align.center("[red]❌ Invalid choice! Please try again.[/red]"))
             console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
             choice = input()
@@ -216,7 +214,7 @@ class View_menu:
         console.print()
 
         terminal_width = console.width
-        text = f" Select tournament index (1-{len(tournaments)}, 0 to cancel) ➤ "
+        text = " Select tournament index (0 to cancel) ➤ "
         padding = (terminal_width - len(text) - 5) // 2
 
         console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")

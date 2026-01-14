@@ -12,8 +12,15 @@ class Controller_match:
 
     def start_tournament(self, tournament):
 
-        if len(tournament['players']) == 0 or len(tournament['players']) % 2 != 0:
-            self.view.display_error_even_players()
+        max_rounds = int(tournament.get('max_rounds', 4))
+        min_players = 2 * max_rounds
+        num_players = len(tournament['players'])
+
+        if num_players < min_players or num_players % 2 != 0:
+            if num_players % 2 != 0:
+                self.view.display_error_even_players()
+            else:
+                self.view.display_error_minimum_players(min_players, max_rounds, num_players)
             return
 
         if not self.view.display_tournament_start_confirmation(tournament):
@@ -58,7 +65,7 @@ class Controller_match:
                 self.enter_match_results(tournament, round_data, round_index, all_players)
 
             elif choice == "2":
-                max_rounds = tournament.get('max_rounds', 4)
+                max_rounds = int(tournament.get('max_rounds', 4))
 
                 if current_round < max_rounds:
                     if self.check_all_results_entered(round_data):

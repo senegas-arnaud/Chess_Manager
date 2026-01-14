@@ -31,7 +31,10 @@ class View_tournament:
         padding_left = (terminal_width - form_width) // 2
 
         console.print(" " * padding_left, end="")
-        name = console.input("[bold yellow]📝 Enter tournament's name ➤[/bold yellow] ")
+        name = console.input("[bold yellow]📝 Enter tournament's name (0 to cancel) ➤[/bold yellow] ")
+
+        if name.strip() == "0":
+            return None
         console.print()
 
         console.print(" " * padding_left, end="")
@@ -48,12 +51,16 @@ class View_tournament:
         console.print()
 
         console.print(" " * padding_left, end="")
+        max_rounds = console.input("[bold yellow]🔢 Enter number of rounds (min 3, max 8) ➤[/bold yellow] ")
+        console.print()
+
+        console.print(" " * padding_left, end="")
         remark = console.input("[bold yellow]📋 Add any additionnal remarks ➤[/bold yellow] ")
         console.print()
 
         console.print(Align.center("[blue]" + "─" * 60 + "[/blue]"))
 
-        return name, location, beginning_date, ending_date, remark
+        return name, location, beginning_date, ending_date, max_rounds, remark
 
     def display_error(self, text):
         console.print(Align.center(f"\n [bold red]{text}[/bold red] \n"))
@@ -221,18 +228,48 @@ class View_tournament:
 
         return choice
 
-    def player_registration(self):
+    def player_registration(self, all_players, tournament_players_ids):
         os.system('cls' if os.name == 'nt' else 'clear')
-        console.print("\n" * 3)
+        console.print("\n" * 2)
 
         title = Panel(
-            "[bold magenta]👤  PLAYER REGISTRATION  👤[/bold magenta]",
+            "[bold magenta]👤  ADD PLAYER TO TOURNAMENT  👤[/bold magenta]",
             border_style="blue",
             box=box.ROUNDED,
             expand=False
         )
         console.print(Align.center(title))
         console.print()
+
+        if all_players:
+
+            table = Table(
+                show_header=True,
+                header_style="bold magenta",
+                border_style="blue",
+                box=box.ROUNDED,
+                expand=False
+            )
+
+            table.add_column("Name", justify="left", style="white", width=20)
+            table.add_column("National ID", justify="left", style="yellow", width=20)
+            table.add_column("Status", justify="center", style="white", width=30)
+
+            for player in all_players:
+                full_name = f"{player['name']} {player['surname']}"
+                status = "✅ Registered" if player['national_id'] in tournament_players_ids else "❌ Not registered"
+
+                table.add_row(
+                    full_name,
+                    player['national_id'],
+                    status
+                )
+
+            console.print(Align.center(table))
+            console.print()
+        else:
+            console.print(Align.center("[yellow]No players available.[/yellow]"))
+            console.print()
 
         console.print(Align.center("[blue]" + "─" * 60 + "[/blue]"))
         console.print()
@@ -243,7 +280,7 @@ class View_tournament:
 
         console.print(" " * padding_left, end="")
         national_id = console.input(
-            "[bold yellow]🆔 Enter player's national ID (0 to cancel) ➤[/bold yellow] "
+            "[bold yellow]🆔 Enter player's national ID to add (0 to cancel) ➤[/bold yellow] "
         )
         console.print()
 
@@ -277,9 +314,9 @@ class View_tournament:
             expand=False
         )
 
-        table.add_column("N°", justify="center", style="cyan", width=5)
+        table.add_column("Index", justify="center", style="yellow", width=5)
         table.add_column("Full Name", justify="left", style="white", width=30)
-        table.add_column("National ID", justify="center", style="yellow", width=12)
+        table.add_column("National ID", justify="center", style="cyan", width=12)
 
         for i, player in enumerate(tournament_players, 1):
             full_name = f"{player['name']} {player['surname']}"
@@ -293,7 +330,7 @@ class View_tournament:
         console.print()
 
         terminal_width = console.width
-        text = " Select player number to delete (0 to cancel) ➤ "
+        text = " Select INDEX's player to delete (0 to cancel) ➤ "
         padding = (terminal_width - len(text) - 5) // 2
 
         console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
@@ -327,7 +364,7 @@ class View_tournament:
         table.add_column(justify="center", style="white", width=25)
         table.add_column(justify="center", style="white", width=25)
 
-        table.add_row("1 ➤ Retry", "2 ➤ Go back")
+        table.add_row("1 ➤ Add an other one", "2 ➤ Go back")
 
         console.print(Align.center(table))
         console.print()
@@ -345,3 +382,72 @@ class View_tournament:
             choice = input()
 
         return choice
+
+    def select_tournament_to_delete(self, tournaments):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        console.print("\n" * 2)
+
+        title = "[bold red]🗑️  DELETE TOURNAMENT  🗑️[/bold red]"
+        console.print(Align.center(Panel(title, style="bold red", expand=False)))
+        console.print()
+
+        if not tournaments:
+            console.print(Align.center("[yellow]No tournaments to delete.[/yellow]"))
+            input("\n[Press Enter to continue...]")
+            return None
+
+        table = Table(
+            show_header=True,
+            header_style="bold magenta",
+            border_style="red",
+            box=box.ROUNDED,
+            expand=False
+        )
+
+        table.add_column("Index", justify="center", style="cyan", width=10)
+        table.add_column("Name", justify="left", style="white", width=25)
+        table.add_column("Status", justify="center", style="yellow", width=15)
+
+        for i, tournament in enumerate(tournaments, 1):
+            status = tournament.get('status', 'registration')
+            status_colors = {
+                'registration': '[yellow]Registration[/yellow]',
+                'in progress': '[green]In progress[/green]',
+                'done': '[red]Done[/red]'
+            }
+            status_display = status_colors.get(status, status)
+
+            table.add_row(
+                str(i),
+                tournament['name'],
+                status_display
+            )
+
+        console.print(Align.center(table))
+        console.print()
+
+        console.print(
+            Align.center("[yellow]⚠️   Only tournaments in 'registration' status can be deleted. ⚠️ [/yellow]"))
+        console.print()
+
+        terminal_width = console.width
+        text = " Select INDEX's tournament to delete (0 to cancel) ➤ "
+        padding = (terminal_width - len(text) - 5) // 2
+
+        console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
+        choice = input()
+
+        try:
+            choice_int = int(choice)
+            if choice_int == 0:
+                return None
+            if 1 <= choice_int <= len(tournaments):
+                return tournaments[choice_int - 1]
+            else:
+                console.print(Align.center("[red]❌ Invalid index![/red]"))
+                input("\n[Press Enter to continue...]")
+                return None
+        except ValueError:
+            console.print(Align.center("[red]❌ Please enter a valid number![/red]"))
+            input("\n[Press Enter to continue...]")
+            return None

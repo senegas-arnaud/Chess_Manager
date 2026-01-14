@@ -6,12 +6,12 @@ import re
 
 class Model_tournament:
 
-    def __init__(self, name="", location="", beginning_date="", ending_date="", remarks=""):
+    def __init__(self, name="", location="", beginning_date="", ending_date="", max_rounds=4, remarks=""):
         self.tournament_name = name
         self.tournament_location = location
         self.tournament_beginning_date = beginning_date
         self.tournament_ending_date = ending_date
-        self.tournament_max_rounds = 4
+        self.tournament_max_rounds = max_rounds
         self.current_round = 0
         self.round_history = []
         self.players = []
@@ -90,6 +90,13 @@ class Model_tournament:
         pattern = r'^[a-zA-ZÀ-ÿ\s\-\']+$'
         return bool(re.match(pattern, self.remarks.strip()))
 
+    def validate_max_rounds(self):
+        try:
+            rounds = int(self.tournament_max_rounds)
+            return 3 <= rounds <= 8
+        except (ValueError, TypeError):
+            return False
+
     def validate_tournament_info(self):
         errors = []
         if not self.validate_name():
@@ -98,6 +105,8 @@ class Model_tournament:
             errors.append("❌ Location must contain only numbers and letters and be between 1-100 characters. ❌")
         if not self.validate_remarks():
             errors.append("❌ Remarks must contain only letters and be between 1-100 characters. ❌")
+        if not self.validate_max_rounds():
+            errors.append("❌ Number of rounds must be between 1 and 10. ❌")
         if not self.validate_beginning_date_format():
             errors.append("❌ Date format is invalid. Use YYYY-MM-DD. ❌")
         else:
@@ -165,6 +174,8 @@ class Model_tournament:
                 with open(self.file, 'w', encoding='utf-8') as f:
                     json.dump(tournaments, f, ensure_ascii=False, indent=4)
 
+                return f"✅ Player {player_id} successfully registered! ✅"
+
         return "❌ Tournament not found. ❌"
 
     def delete_player(self, tournament_id, player_id):
@@ -187,5 +198,27 @@ class Model_tournament:
                     return f"✅ Player {player_id} successfully removed! ✅"
                 else:
                     return f"❌ Player {player_id} not found in this tournament. ❌"
+
+        return "❌ Tournament not found. ❌"
+
+    def delete_tournament(self, tournament_name):
+        tournaments = self.load_tournament_data()
+
+        for i, tournament in enumerate(tournaments):
+            if tournament['name'] == tournament_name:
+                status = tournament.get('status', 'registration')
+
+                if status != 'registration':
+                    return (
+                                f"❌ Cannot delete tournament. Status: {status}. "
+                                f"Only tournaments in 'inscription' status can be deleted. ❌"
+                            )
+
+                tournaments.pop(i)
+
+                with open(self.file, 'w', encoding='utf-8') as f:
+                    json.dump(tournaments, f, ensure_ascii=False, indent=4)
+
+                return f"✅ Tournament '{tournament_name}' successfully deleted! ✅"
 
         return "❌ Tournament not found. ❌"

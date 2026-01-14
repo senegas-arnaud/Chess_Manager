@@ -99,3 +99,29 @@ class Model_player_info:
         )
 
         return sorted_players
+
+    def update_player_data(self, old_national_id, new_name, new_surname, new_birthday, new_national_id):
+        players = self.load_player_data()
+
+        for player in players:
+            if player['national_id'] == old_national_id:
+                player['name'] = new_name
+                player['surname'] = new_surname
+                player['birthday'] = new_birthday
+                player['national_id'] = new_national_id
+
+                with open(self.file, 'w', encoding='utf-8') as f:
+                    json.dump(players, f, ensure_ascii=False, indent=4)
+
+                return "✅ Player information updated successfully! ✅"
+
+        return "❌ Player not found. ❌"
+
+    def get_player_by_id(self, national_id):
+        players = self.load_player_data()
+
+        for player in players:
+            if player['national_id'] == national_id:
+                return player
+
+        return None

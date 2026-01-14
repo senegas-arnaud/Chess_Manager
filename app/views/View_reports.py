@@ -32,7 +32,7 @@ class View_reports:
             expand=False
         )
 
-        table.add_column("Index", justify="center", style="cyan", width=10)
+        table.add_column("Index", justify="center", style="yellow", width=10)
         table.add_column("Name", justify="left", style="white", width=25)
         table.add_column("Date", justify="center", style="green", width=25)
         table.add_column("Location", justify="left", style="white", width=20)
@@ -61,7 +61,7 @@ class View_reports:
         console.print()
 
         terminal_width = console.width
-        text = f" Select tournament index (1-{len(tournaments)}, 0 to cancel) ➤ "
+        text = " Select tournament INDEX (0 to cancel) ➤ "
         padding = (terminal_width - len(text) - 5) // 2
 
         console.print(" " * padding + "[bold yellow]" + text + "[/bold yellow]", end="")
@@ -116,7 +116,7 @@ class View_reports:
             expand=False
         )
 
-        matches_table.add_column(justify="center", width=60)
+        matches_table.add_column(justify="center", width=80)
 
         for match in round_data['matches']:
             player1_id = match[0][0]
@@ -131,11 +131,11 @@ class View_reports:
             player2_name = f"{player2.get('name', '?')} {player2.get('surname', '?')}"
 
             if player1_score > player2_score:
-                match_display = f"[green]{player1_name}[/green] vs [red]{player2_name}[/red]"
+                match_display = f"[green]{player1_name}[/green] 🏆 vs 😔 [red]{player2_name}[/red]"
             elif player2_score > player1_score:
-                match_display = f"[red]{player1_name}[/red] vs [green]{player2_name}[/green]"
+                match_display = f"[red]{player1_name}[/red] 😔 vs 🏆 [green]{player2_name}[/green]"
             else:
-                match_display = f"[blue]{player1_name}[/blue] vs [blue]{player2_name}[/blue]"
+                match_display = f"[blue]{player1_name}[/blue] 🤝 vs 🤝 [blue]{player2_name}[/blue]"
 
             matches_table.add_row(match_display)
 

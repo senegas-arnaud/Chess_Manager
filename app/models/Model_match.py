@@ -182,7 +182,7 @@ class Model_match:
                     self.end_round(tournament_name)
 
                     current_round = tournament['current_round']
-                    max_rounds = tournament.get('max_rounds', 4)
+                    max_rounds = int(tournament.get('max_rounds', 4))
 
                     if current_round >= max_rounds:
                         self.finish_tournament(tournament_name)
