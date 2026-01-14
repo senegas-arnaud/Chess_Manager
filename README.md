@@ -40,9 +40,14 @@ Python application for managing chess tournaments using the Swiss pairing system
 - ✅ Form validation with clear error messages
 - ✅ Cancel operations with "0" input
 
+
 ### Prerequisites needed for using the application
 Follow these steps :
 - Recreate the virtual environment
 - Activate the virtual environment
 - Install the dependencies : `pip install -r requirements.txt`
 - Run the application : `python main.py`
+
+If you need to generate a new flake 8 rapport :
+- Delete the old flake8 rapport file
+- Create the new one : `flake8 --format=html --htmldir=flake8_rapport`

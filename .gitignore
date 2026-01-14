@@ -12,4 +12,3 @@ __pycache__/
 htmlcov/
 .vscode/
 settings.json
-flake8_rapport/
