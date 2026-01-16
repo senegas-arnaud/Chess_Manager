@@ -142,11 +142,13 @@ class View_tournament:
         console.print()
 
         registered = len(tournament['players'])
+        max_rounds = tournament['max_rounds']
 
         info_text = (
             f"[cyan]📍 {tournament['location']}[/cyan]  |  "
             f"[green]📅 {tournament['beginning_date']} → {tournament['ending_date']}[/green]  |  "
-            f"[yellow]👥 {registered} players registered[/yellow]"
+            f"[magenta]🎯 {max_rounds} Rounds [/magenta]  |  "
+            f"[yellow]👥 {registered}/{2*max_rounds} players registered[/yellow]"
         )
         console.print(Align.center(info_text))
         console.print()

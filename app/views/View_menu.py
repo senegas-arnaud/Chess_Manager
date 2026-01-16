@@ -158,6 +158,7 @@ class View_menu:
             table.add_column("Name", justify="left", style="white", width=25)
             table.add_column("Location", justify="left", style="cyan", width=20)
             table.add_column("Date", justify="center", style="green", width=25)
+            table.add_column("Status", justify="center", style="magenta", width=15)
 
             for i, tournament in enumerate(tournaments, 1):
                 dates = f"{tournament['beginning_date']} → {tournament['ending_date']}"
@@ -165,7 +166,8 @@ class View_menu:
                     str(i),
                     tournament['name'],
                     tournament['location'],
-                    dates
+                    dates,
+                    tournament['status']
                 )
 
             console.print(Align.center(table))
