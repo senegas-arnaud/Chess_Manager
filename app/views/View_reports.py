@@ -205,7 +205,6 @@ class View_reports:
                 winner_names.append(f"{player.get('name', '?')} {player.get('surname', '?')}")
 
             winner_text = Align.center(
-                f"[bold yellow]🎊 TIE 🎊[/bold yellow]\n\n"
                 f"[bold white]{' & '.join(winner_names)}[/bold white]"
             )
         else:
@@ -213,7 +212,6 @@ class View_reports:
             winner_name = f"{player.get('name', '?')} {player.get('surname', '?')}"
 
             winner_text = (
-                f"[bold yellow]👑 CHAMPION 👑[/bold yellow]\n\n"
                 f"[bold white]{winner_name}[/bold white]"
             )
 
